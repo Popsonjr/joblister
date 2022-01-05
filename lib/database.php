@@ -24,6 +24,7 @@ class Database {
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
         } catch (PDOException $e) {
             $this->error = $e->getMessage();
+            echo $e;
             
         }
     }
@@ -34,7 +35,7 @@ class Database {
 
     public function bind($param, $value, $type = null) {
         if (is_null($type)) {
-            switch ($variable) {
+            switch (true) {
                 case is_int ($value):
                     $type = PDO::PARAM_INT;
                     break;
