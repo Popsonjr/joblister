@@ -25,3 +25,4 @@
       </ul>
       <!-- <h1><?php echo SITE_TITLE; ?></h1> -->
     </header>
+    <?php displayMessage(); ?>

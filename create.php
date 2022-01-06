@@ -4,19 +4,26 @@
 
 $job = new Job;
 
-$template = new Template('templates/frontpage.php');
-
-$category = isset($_GET['category']) ? $_GET['category'] : null;
-
-if ($category) {
-    $template->jobs = $job->getByCategory($category);
-    $template->title = 'Jobs in '. $job->getCategory($category)->name;
-} else {
-    $template->title = 'Latest Jobs';
-    $template->jobs = $job->getAllJobs();
+if (isset($_POST['submit'])) {
+    // Create Data Array
+    $data = array();
+    $data['job_title'] = $_POST['job_title'];
+    $data['company'] = $_POST['company'];
+    $data['category_id'] = $_POST['category'];
+    $data['description'] = $_POST['description'];
+    $data['location'] = $_POST['location'];
+    $data['salary'] = $_POST['salary'];
+    $data['contact_email'] = $_POST['contact_email'];
+    $data['contact_user'] = $_POST['contact_user'];
     
+    if ($job->create($data)) {
+        redirect('index.php', 'Your job has been listed', 'success');
+    } else {
+        redirect('index.php', 'Something went wrong', 'error');
+    }
 }
 
+$template = new Template('templates/job-create.php');
 
 $template->categories = $job->getCategories();
 
